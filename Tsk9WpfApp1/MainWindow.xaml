@@ -1,0 +1,84 @@
+﻿<Window x:Class="Tsk9WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tsk9WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="900" Style="{DynamicResource WindStyle}">
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenExecuted"/>
+        <CommandBinding Command="Save" Executed="SaveExecuted"/>
+        <CommandBinding Command="Close" Executed="CloseExecuted"/>
+    </Window.CommandBindings>
+    <Grid>
+        <!--Доработать проект текстового редактора из задания 8, добавив возможность выбора светлой и темной темы 
+        (учесть, что после задания 8 приложение содержит словарь ресурсов со списками названий шрифтов и размеров. 
+        Следует быть внимательным, чтобы его случайно не потерять).
+        -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Margin="2" Padding="2" Style="{DynamicResource MenuStyle}">
+            <MenuItem Header="_Файл">
+                <MenuItem Header="_Открыть" Command="Open"  Style="{DynamicResource MenuItemStyle}"/>
+                <MenuItem Header="_Сохранить как" Command="Save"  Style="{DynamicResource MenuItemStyle}"/>
+                <Separator/>
+                <MenuItem Header="_Закрыть" Command="Close" Style="{DynamicResource MenuItemStyle}"/>
+            </MenuItem>
+            <MenuItem Header="Правка">
+                <MenuItem Header="Копировать" Command="Copy" CommandTarget="{Binding ElementName=textBox}" Style="{DynamicResource MenuItemStyle}"/>
+                <MenuItem Header="Вырезать" Command="Cut" CommandTarget="{Binding ElementName=textBox}" Style="{DynamicResource MenuItemStyle}"/>
+                <MenuItem Header="Вставить" Command="Paste" CommandTarget="{Binding ElementName=textBox}" Style="{DynamicResource MenuItemStyle}"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Grid.Row="1" Style="{DynamicResource ToolBarStyle}" >
+            <ToolBar Margin="5" Padding="5" Style="{DynamicResource ToolBarStyle}">
+                <Button Width="30" Height="30" Command="Save" Style="{DynamicResource ButtonStyle}">
+                    <Image Source="Data\Save.png"/>
+                </Button>
+                <Button Width="30" Height="30" Command="Open" Style="{DynamicResource ButtonStyle}">
+                    <Image Source="Data\open.png"/>
+                </Button>
+            </ToolBar>
+            <ToolBar Style="{DynamicResource ToolBarStyle}">
+                <ComboBox Margin="5" Padding="5" SelectedIndex="0" Width="200" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{StaticResource Fonts}" Style="{DynamicResource CBoxStyle}">
+                    <!--<TextBlock Resources="{StaticResource Fonts}"/>
+                    <TextBlock Text="Times New Roman"/>
+                    <TextBlock Text="Verdana"/>-->
+                </ComboBox>
+                <ComboBox Margin="5" Padding="5" SelectedIndex="2" Width="50" SelectionChanged="ComboBox_SelectionChanged_1" ItemsSource="{StaticResource Sizes}" Style="{DynamicResource CBoxStyle}">
+                    <!--<TextBlock Text="12"/>
+                    <TextBlock Text="14"/>
+                    <TextBlock Text="16"/>-->
+                </ComboBox>
+            </ToolBar>
+            <ToolBar Margin="5" Padding="5" Style="{DynamicResource ToolBarStyle}">
+                <Button Width="30" Height="30" Command="ToggleBold" CommandTarget="{Binding ElementName=textBox}" Style="{DynamicResource ButtonStyle}">
+                    <Image Source="Data\test_bold.png"/>
+                </Button>
+                <Separator/>
+                <Button Width="30" Height="30" Command="ToggleItalic" CommandTarget="{Binding ElementName=textBox}" Style="{DynamicResource ButtonStyle}">
+                    <Image Source="Data\test_italic.png"/>
+                </Button>
+
+                <Separator/>
+                <Button Width="30" Height="30" Command="ToggleUnderline" CommandTarget="{Binding ElementName=textBox}" Style="{DynamicResource ButtonStyle}">
+                    <Image Source="Data\test_underline.png"/>
+                </Button>
+            </ToolBar>
+            <ToolBar Margin="5" Padding="5" Style="{DynamicResource ToolBarStyle}">
+                <StackPanel VerticalAlignment="Center">
+                    <RadioButton Content="Черный" IsChecked="True" Checked="RadioButton_Checked" Style="{DynamicResource RadioButStyle}"/>
+                    <RadioButton Content="Красный" Checked="RadioButton_Checked_1" Style="{DynamicResource RadioButStyle}"/>
+                </StackPanel>
+            </ToolBar>
+            <ToolBar Style="{DynamicResource ToolBarStyle}">
+                <ComboBox x:Name="stylesBox" Margin="5" Padding="5" Width="100" Style="{DynamicResource CBoxStyle}"/>
+            </ToolBar>
+        </ToolBarTray>
+        <RichTextBox x:Name="textBox" Grid.Row="2" Margin="5" Padding="5" FontSize="16" FontFamily="Arial"  SpellCheck.IsEnabled="True" xml:lang="ru-ru" Style="{DynamicResource RTBStyle}"/>
+    </Grid>
+</Window>
